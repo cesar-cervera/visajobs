@@ -1,19 +1,16 @@
 import {
   html,
-  render,
   useState,
   useEffect,
 } from "https://unpkg.com/htm/preact/standalone.module.js";
 
-// i commented out the header because i'm building my own navbar
-//import { Header } from "./Header.js";
 import { getJobs } from "./services/jobs.js";
-import { NavBar } from "./components/navbar.js";
+import { NavBar } from "./components/navBar.js";
 import { JobCard } from "./components/jobCard.js";
 import { FiltersSide } from "./components/filtersSide.js";
 import { AiTools } from "./components/aiTools.js";
 import { SearchBar } from "./components/searchBar.js";
-function App() {
+export function App() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [jobTypeFilter, setJobTypeFilter] = useState("");
@@ -50,4 +47,3 @@ function App() {
     </div>
   `;
 }
-render(html` <${App} /> `, document.getElementById("app"));
