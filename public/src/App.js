@@ -12,18 +12,6 @@ import { AiTools } from "./components/aiTools.js";
 import { SearchBar } from "./components/searchBar.js";
 
 
-import { seedJobsFromJSON } from './services/jobs';
-
-function App() {
-  // Call it ONCE when the app starts
-  useEffect(() => {
-    seedJobsFromJSON();
-  }, []);
-
-  return <Components />;
-}
-
-
 export function App() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
