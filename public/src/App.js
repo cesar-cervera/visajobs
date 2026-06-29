@@ -4,29 +4,31 @@ import {
   useEffect,
 } from "https://unpkg.com/htm/preact/standalone.module.js";
 
-import { getJobs } from "./services/jobs.js";
+import { getAllJobs } from "./services/jobs.js";
 import { NavBar } from "./components/navBar.js";
 import { JobCard } from "./components/jobCard.js";
 import { FiltersSide } from "./components/filtersSide.js";
 import { AiTools } from "./components/aiTools.js";
 import { SearchBar } from "./components/searchBar.js";
-
-
+ 
 export function App() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [jobTypeFilter, setJobTypeFilter] = useState("");
+ 
   useEffect(() => {
-    getJobs().then((data) => {
+    getAllJobs().then((data) => {
       setJobs(data);
     });
   }, []);
+ 
   const filteredJobs = jobs.filter(
     (job) =>
-      (job.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.company.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (jobTypeFilter === "" || job.jobType === jobTypeFilter)
   );
+ 
   return html`
     <div>
       <${NavBar} />
@@ -49,3 +51,4 @@ export function App() {
     </div>
   `;
 }
+ 

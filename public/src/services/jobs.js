@@ -1,5 +1,5 @@
 import Parse from 'parse';
-import Job from '../models/Jobs.js';
+import Job from '../models/Job.js';
 import User from '../models/User.js';
 import Application from '../models/Applications.js';
 

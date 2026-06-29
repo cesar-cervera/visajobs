@@ -4,7 +4,7 @@ import Parse from 'parse';
 // creating a class extending the parse object
 class Applications extends Parse.Object{
     constructor(){
-        super('Applicatoins');
+        super('Applications');
     }
 
 }

@@ -1,4 +1,4 @@
-import Parse from 'Parse';
+import Parse from 'parse';
 
 class Job extends Parse.Object{
     constructor(){

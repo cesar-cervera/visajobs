@@ -5,7 +5,7 @@ import { html } from "https://unpkg.com/htm/preact/standalone.module.js";
 export function JobCard({ job }) {
   return html`
     <div class="jobCard">
-      <h3>${job.jobTitle}</h3>
+      <h3>${job.title}</h3>
       <p>${job.company} · ${job.location}</p>
       <p>${job.jobType} · ${job.salary}</p>
       <p>${job.description}</p>
