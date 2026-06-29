@@ -3,7 +3,7 @@ import {
   useState,
   useEffect,
 } from "https://unpkg.com/htm/preact/standalone.module.js";
-
+// fix the error later
 import { getAllJobs } from "./services/jobs.js";
 import { NavBar } from "./components/navBar.js";
 import { JobCard } from "./components/jobCard.js";
