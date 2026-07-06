@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../Auth/AuthService';
 
-// Home page component - landing page for the visa jobs app
+// Home page component
 export default function Home() {
   const navigate = useNavigate();
 

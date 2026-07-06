@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, checkUser } from './AuthService';
 import AuthForm from './AuthForm';
 
-// Login component - stateful parent for login
+// Login component
 const AuthLogin = () => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({

@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { checkUser } from './AuthService';
 
-// Auth module - entry point for login and register
+// Auth module
 const AuthModule = () => {
   const navigate = useNavigate();
 
