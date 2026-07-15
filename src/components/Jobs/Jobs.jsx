@@ -10,7 +10,7 @@ import { NavBar } from '../navBar';
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [jobTypeFilter, setJobTypeFilter] = useState('');
+  const [jobTypeFilter, setJobTypeFilter] = useState([]);
   const [visaTypeFilter, setVisaTypeFilter] = useState([]);
 
   // Fetch jobs from Parse on component mount
@@ -25,18 +25,18 @@ export default function Jobs() {
     (job) =>
       (job.get('title').toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.get('company').toLowerCase().includes(searchTerm.toLowerCase())) &&
-        (jobTypeFilter === '' || job.get('jobType')?.trim().toLowerCase() === jobTypeFilter.toLowerCase()) &&
-      (visaTypeFilter.length === 0 || visaTypeFilter.includes(job.get('visaType')?.trim()))  );
-  console.log('visa filter:', visaTypeFilter);
-  console.log('jobs:', jobs.map(j => j.get('visaType')));
+      (jobTypeFilter.length === 0 || jobTypeFilter.includes(job.get('jobType')?.trim().toLowerCase())) &&
+      (visaTypeFilter.length === 0 || visaTypeFilter.includes(job.get('visaType')?.trim()))
+  );
+
   return (
     <div className="bg-gray-50 min-h-screen w-full">
       <NavBar />
       <div className="flex flex-col lg:flex-row gap-6 p-6">
         <aside className="w-full lg:w-64 flex-shrink-0">
-          {/* Pass visa type filter handler to FiltersSide */}
-          <FiltersSide 
-            onVisaTypeFilter={setVisaTypeFilter} 
+          {/* Pass filter handlers to FiltersSide */}
+          <FiltersSide
+            onVisaTypeFilter={setVisaTypeFilter}
             onJobTypeFilter={setJobTypeFilter}
           />
         </aside>

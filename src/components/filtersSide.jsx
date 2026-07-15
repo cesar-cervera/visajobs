@@ -4,6 +4,7 @@ import { useState } from 'react';
 // allows users to filter jobs by type and field
 export function FiltersSide({ onVisaTypeFilter, onJobTypeFilter }) {
   const [selectedVisaTypes, setSelectedVisaTypes] = useState([]);
+  const [selectedJobTypes, setSelectedJobTypes] = useState([]);
 
   const handleVisaChange = (type, checked) => {
     const updated = checked
@@ -11,6 +12,14 @@ export function FiltersSide({ onVisaTypeFilter, onJobTypeFilter }) {
       : selectedVisaTypes.filter((t) => t !== type);
     setSelectedVisaTypes(updated);
     onVisaTypeFilter(updated);
+  };
+
+  const handleJobTypeChange = (type, checked) => {
+    const updated = checked
+      ? [...selectedJobTypes, type.toLowerCase()]
+      : selectedJobTypes.filter((t) => t !== type.toLowerCase());
+    setSelectedJobTypes(updated);
+    onJobTypeFilter(updated);
   };
 
   return (
@@ -34,13 +43,13 @@ export function FiltersSide({ onVisaTypeFilter, onJobTypeFilter }) {
         <p className="font-semibold text-gray-700 mb-2">Job Type</p>
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" onChange={(e) => onJobTypeFilter(e.target.checked ? 'Full-time' : '')} /> Full-time
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => handleJobTypeChange('Full-time', e.target.checked)} /> Full-time
           </label>
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" onChange={(e) => onJobTypeFilter(e.target.checked ? 'Internship' : '')} /> Internship
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => handleJobTypeChange('Internship', e.target.checked)} /> Internship
           </label>
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" onChange={(e) => onJobTypeFilter(e.target.checked ? 'Part-time' : '')} /> Part-time
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => handleJobTypeChange('Part-time', e.target.checked)} /> Part-time
           </label>
         </div>
       </div>
