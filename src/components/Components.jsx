@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import JobDetail from './JobDetail/JobDetail';
 import Home from './Home/Home';
 import Jobs from './Jobs/Jobs';
 import AuthModule from './Auth/Auth';
@@ -19,6 +20,7 @@ export default function Components() {
         {/* Protected routes */}
         <Route path="/" element={<ProtectedRoute component={Home} />} />
         <Route path="/jobs" element={<ProtectedRoute component={Jobs} />} />
+        <Route path="/jobs/:id" element={<JobDetail/>} />
 
         {/* Catch all */}
         <Route path="*" element={<Navigate to="/auth" replace />} />
