@@ -25,17 +25,20 @@ export default function Jobs() {
     (job) =>
       (job.get('title').toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.get('company').toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (jobTypeFilter === '' || job.get('jobType') === jobTypeFilter) &&
-      (visaTypeFilter.length === 0 || visaTypeFilter.includes(job.get('visaType')))
-  );
-
+        (jobTypeFilter === '' || job.get('jobType')?.trim().toLowerCase() === jobTypeFilter.toLowerCase()) &&
+      (visaTypeFilter.length === 0 || visaTypeFilter.includes(job.get('visaType')?.trim()))  );
+  console.log('visa filter:', visaTypeFilter);
+  console.log('jobs:', jobs.map(j => j.get('visaType')));
   return (
     <div className="bg-gray-50 min-h-screen w-full">
       <NavBar />
       <div className="flex flex-col lg:flex-row gap-6 p-6">
         <aside className="w-full lg:w-64 flex-shrink-0">
           {/* Pass visa type filter handler to FiltersSide */}
-          <FiltersSide onVisaTypeFilter={setVisaTypeFilter} />
+          <FiltersSide 
+            onVisaTypeFilter={setVisaTypeFilter} 
+            onJobTypeFilter={setJobTypeFilter}
+          />
         </aside>
         <section className="flex-1">
           <SearchBar

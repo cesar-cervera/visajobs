@@ -1,7 +1,8 @@
+import { useState } from 'react';
+
 // filters sidebar component
 // allows users to filter jobs by type and field
-import { useState } from 'react';
-export function FiltersSide({ onVisaTypeFilter }) {
+export function FiltersSide({ onVisaTypeFilter, onJobTypeFilter }) {
   const [selectedVisaTypes, setSelectedVisaTypes] = useState([]);
 
   const handleVisaChange = (type, checked) => {
@@ -33,13 +34,13 @@ export function FiltersSide({ onVisaTypeFilter }) {
         <p className="font-semibold text-gray-700 mb-2">Job Type</p>
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" /> Full-time
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => onJobTypeFilter(e.target.checked ? 'Full-time' : '')} /> Full-time
           </label>
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" /> Internship
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => onJobTypeFilter(e.target.checked ? 'Internship' : '')} /> Internship
           </label>
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" /> Part-time
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => onJobTypeFilter(e.target.checked ? 'Part-time' : '')} /> Part-time
           </label>
         </div>
       </div>
