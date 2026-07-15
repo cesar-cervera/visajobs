@@ -11,6 +11,7 @@ export default function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [jobTypeFilter, setJobTypeFilter] = useState('');
+  const [visaTypeFilter, setVisaTypeFilter] = useState('');
 
   // Fetch jobs from Parse on component mount
   useEffect(() => {
@@ -19,12 +20,13 @@ export default function Jobs() {
     });
   }, []);
 
-  // Filter jobs based on search term and job type
+  // Filter jobs based on search term, job type and visa type
   const filteredJobs = jobs.filter(
     (job) =>
       (job.get('title').toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.get('company').toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (jobTypeFilter === '' || job.get('jobType') === jobTypeFilter)
+      (jobTypeFilter === '' || job.get('jobType') === jobTypeFilter) &&
+      (visaTypeFilter === '' || job.get('visaType') === visaTypeFilter)
   );
 
   return (
@@ -32,7 +34,8 @@ export default function Jobs() {
       <NavBar />
       <div className="flex flex-col lg:flex-row gap-6 p-6">
         <aside className="w-full lg:w-64 flex-shrink-0">
-          <FiltersSide />
+          {/* Pass visa type filter handler to FiltersSide */}
+          <FiltersSide onVisaTypeFilter={setVisaTypeFilter} />
         </aside>
         <section className="flex-1">
           <SearchBar

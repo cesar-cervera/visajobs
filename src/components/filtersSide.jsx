@@ -1,6 +1,6 @@
 // filters sidebar component
 // allows users to filter jobs by type and field
-export function FiltersSide() {
+export function FiltersSide({ onVisaTypeFilter }) {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 h-fit">
       <h2 className="text-lg font-bold text-gray-800 mb-4">Filters</h2>
@@ -8,13 +8,13 @@ export function FiltersSide() {
         <p className="font-semibold text-gray-700 mb-2">Visa Type</p>
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" /> H-1B
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => onVisaTypeFilter(e.target.checked ? 'H-1B' : '')} /> H-1B
           </label>
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" /> OPT
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => onVisaTypeFilter(e.target.checked ? 'OPT' : '')} /> OPT
           </label>
           <label className="flex items-center gap-2 text-gray-600">
-            <input type="checkbox" className="accent-blue-600" /> CPT
+            <input type="checkbox" className="accent-blue-600" onChange={(e) => onVisaTypeFilter(e.target.checked ? 'CPT' : '')} /> CPT
           </label>
         </div>
       </div>
