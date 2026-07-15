@@ -11,7 +11,7 @@ export default function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [jobTypeFilter, setJobTypeFilter] = useState('');
-  const [visaTypeFilter, setVisaTypeFilter] = useState('');
+  const [visaTypeFilter, setVisaTypeFilter] = useState([]);
 
   // Fetch jobs from Parse on component mount
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function Jobs() {
       (job.get('title').toLowerCase().includes(searchTerm.toLowerCase()) ||
         job.get('company').toLowerCase().includes(searchTerm.toLowerCase())) &&
       (jobTypeFilter === '' || job.get('jobType') === jobTypeFilter) &&
-      (visaTypeFilter === '' || job.get('visaType') === visaTypeFilter)
+      (visaTypeFilter.length === 0 || visaTypeFilter.includes(job.get('visaType')))
   );
 
   return (
@@ -43,6 +43,7 @@ export default function Jobs() {
             setSearchTerm={setSearchTerm}
             setJobTypeFilter={setJobTypeFilter}
           />
+          {/* Map over filtered jobs and display each as a JobCard */}
           {filteredJobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
