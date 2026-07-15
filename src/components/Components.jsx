@@ -1,5 +1,4 @@
-import {BrowserRouter as Router,Routes,Route, Navigate,} from 'react-router-dom';
-import { NavBar } from './navBar';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home/Home';
 import Jobs from './Jobs/Jobs';
 import AuthModule from './Auth/Auth';
@@ -7,10 +6,10 @@ import AuthRegister from './Auth/AuthRegister';
 import AuthLogin from './Auth/AuthLogin';
 import ProtectedRoute from './Auth/ProtectedRoute';
 
+// Components.jsx is where all routing lives
 export default function Components() {
   return (
     <Router>
-      <NavBar />
       <Routes>
         {/* Public routes */}
         <Route path="/auth" element={<AuthModule />} />

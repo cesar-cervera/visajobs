@@ -4,7 +4,7 @@ import { loginUser, checkUser } from './AuthService';
 import AuthForm from './AuthForm';
 
 // Login component
-const AuthLogin = () => {
+const AuthLogin = ({ onLogin }) => {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({
     firstName: '',
@@ -28,8 +28,9 @@ const AuthLogin = () => {
     if (currentUser && add) {
       loginUser(currentUser).then((loggedIn) => {
         if (loggedIn) {
-          alert(`Welcome back, ${loggedIn.get('firstName')}!`);
-          navigate('/');
+          setTimeout(() => {
+            navigate('/');
+          }, 500);
         }
         setAdd(false);
       });

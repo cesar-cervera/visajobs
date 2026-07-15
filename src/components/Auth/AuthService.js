@@ -44,5 +44,6 @@ export const logoutUser = () => {
 
 // Check if a user is currently authenticated
 export const checkUser = () => {
-  return Parse.User.current()?.authenticated();
+  const currentUser = Parse.User.current();
+  return currentUser !== null && currentUser !== undefined;
 };
