@@ -1,5 +1,6 @@
 // filters sidebar component
 // allows users to filter jobs by type and field
+import { useState } from 'react';
 export function FiltersSide({ onVisaTypeFilter }) {
   const [selectedVisaTypes, setSelectedVisaTypes] = useState([]);
 
