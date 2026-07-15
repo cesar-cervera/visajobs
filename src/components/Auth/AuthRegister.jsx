@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { createUser, checkUser } from './AuthService';
 import AuthForm from './AuthForm';
 
-// Register component  
+// Register component
 const AuthRegister = () => {
   const navigate = useNavigate();
   const [newUser, setNewUser] = useState({
@@ -18,7 +18,6 @@ const AuthRegister = () => {
   // Redirect if already logged in
   useEffect(() => {
     if (checkUser()) {
-      alert('You are already logged in!');
       navigate('/');
     }
   }, [navigate]);
@@ -28,7 +27,6 @@ const AuthRegister = () => {
     if (newUser && add) {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
-          alert(`${userCreated.get('firstName')}, you successfully registered!`);
           navigate('/');
         }
         setAdd(false);
@@ -48,14 +46,23 @@ const AuthRegister = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <AuthForm
-        user={newUser}
-        onChange={onChangeHandler}
-        onSubmit={onSubmitHandler}
-        isLogin={false}
-      />
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-white rounded-xl shadow-md p-10 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-blue-600 mb-1">Create account</h1>
+        <p className="text-gray-500 mb-6">Join VisaJobs and find your next opportunity</p>
+        <AuthForm
+          user={newUser}
+          onChange={onChangeHandler}
+          onSubmit={onSubmitHandler}
+          isLogin={false}
+        />
+        <p className="text-center text-gray-500 mt-4">
+          Already have an account?{' '}
+          <Link to="/auth/login" className="text-blue-600 font-medium hover:underline">
+            Log in
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

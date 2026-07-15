@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { loginUser, checkUser } from './AuthService';
 import AuthForm from './AuthForm';
 
@@ -18,7 +18,6 @@ const AuthLogin = ({ onLogin }) => {
   // Redirect if already logged in
   useEffect(() => {
     if (checkUser()) {
-      alert('You are already logged in!');
       navigate('/');
     }
   }, [navigate]);
@@ -49,14 +48,23 @@ const AuthLogin = ({ onLogin }) => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <AuthForm
-        user={currentUser}
-        onChange={onChangeHandler}
-        onSubmit={onSubmitHandler}
-        isLogin={true}
-      />
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-white rounded-xl shadow-md p-10 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-blue-600 mb-1">Welcome back</h1>
+        <p className="text-gray-500 mb-6">Log in to your VisaJobs account</p>
+        <AuthForm
+          user={currentUser}
+          onChange={onChangeHandler}
+          onSubmit={onSubmitHandler}
+          isLogin={true}
+        />
+        <p className="text-center text-gray-500 mt-4">
+          Don't have an account?{' '}
+          <Link to="/auth/register" className="text-blue-600 font-medium hover:underline">
+            Sign up
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
