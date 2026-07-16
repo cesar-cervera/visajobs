@@ -5,6 +5,7 @@ import { SearchBar } from '../searchBar';
 import { FiltersSide } from '../filtersSide';
 import { AiTools } from '../aiTools';
 import { NavBar } from '../navBar';
+import AlgoliaSearch from '../Search/AlgoliaSearch';
 
 // Jobs page - stateful parent component that loads job data from Parse
 export default function Jobs() {
@@ -40,17 +41,7 @@ export default function Jobs() {
             onJobTypeFilter={setJobTypeFilter}
           />
         </aside>
-        <section className="flex-1">
-          <SearchBar
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            setJobTypeFilter={setJobTypeFilter}
-          />
-          {/* Map over filtered jobs and display each as a JobCard */}
-          {filteredJobs.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </section>
+        <AlgoliaSearch />
         <aside className="w-full lg:w-48 flex-shrink-0">
           <AiTools />
         </aside>
