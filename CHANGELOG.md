@@ -1,3 +1,14 @@
+## [0.4.0] - 2026-07-15
+
+### Added
+- Algolia search integration for instant job search
+- Visa type and job type filters with multi-select support
+- Detailed job page with full company and job information
+- Save to favorites feature with star button on job cards
+- Favorites list on home page
+- Tailwind CSS styling for NavBar, Jobs, Auth pages
+- CI/CD pipeline via Vercel
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
