@@ -1,23 +1,69 @@
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, Highlight, RefinementList } from 'react-instantsearch';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Parse from 'parse';
+import { addFavorite, removeFavorite, checkFavorite } from '../../services/favorites';
 
 // Initialize Algolia client
 const searchClient = algoliasearch(
   import.meta.env.VITE_ALGOLIA_APP_ID,
   import.meta.env.VITE_ALGOLIA_SEARCH_KEY
 );
+
 // Individual hit component for each job result
 function Hit({ hit }) {
   const navigate = useNavigate();
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState(null);
+
+  // Check if job is already favorited on mount
+  useEffect(() => {
+    const query = new Parse.Query('Job');
+    query.get(hit.objectID).then((parseJob) => {
+      checkFavorite(parseJob).then((favorite) => {
+        if (favorite) {
+          setIsFavorited(true);
+          setFavoriteId(favorite.id);
+        }
+      });
+    });
+  }, [hit.objectID]);
+
+  const handleFavorite = (e) => {
+    e.stopPropagation();
+    if (isFavorited) {
+      removeFavorite(favoriteId).then(() => {
+        setIsFavorited(false);
+        setFavoriteId(null);
+      });
+    } else {
+      const query = new Parse.Query('Job');
+      query.get(hit.objectID).then((parseJob) => {
+        addFavorite(parseJob).then((favorite) => {
+          setIsFavorited(true);
+          setFavoriteId(favorite.id);
+        });
+      });
+    }
+  };
+
   return (
     <div
       className="bg-white rounded-xl shadow-md p-6 mb-4 cursor-pointer hover:shadow-lg border border-gray-100"
       onClick={() => navigate(`/jobs/${hit.objectID}`, { state: { hit } })}
     >
-      <h3 className="text-xl font-bold text-gray-800 mb-1">
-        <Highlight attribute="title" hit={hit} />
-      </h3>
+      <div className="flex justify-between items-start">
+        <h3 className="text-xl font-bold text-gray-800 mb-1">
+          <Highlight attribute="title" hit={hit} />
+        </h3>
+        <button
+          onClick={handleFavorite}
+          className={`text-2xl ${isFavorited ? 'text-yellow-400' : 'text-gray-300'}`}
+        >
+          &#9733;
+        </button>
+      </div>
       <p className="text-blue-600 font-medium mb-1">{hit.company} · {hit.location}</p>
       <p className="text-gray-500 text-sm mb-2">{hit.jobType} · {hit.salary}</p>
       <p className="text-gray-600 text-sm">{hit.description}</p>

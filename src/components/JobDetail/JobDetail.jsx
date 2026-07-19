@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { NavBar } from '../navBar';
 import Parse from 'parse';
+import { addFavorite, removeFavorite, checkFavorite } from '../../services/favorites';
 
 // Job detail page - shows full details of a single job posting
 export default function JobDetail() {
@@ -10,20 +11,51 @@ export default function JobDetail() {
   const location = useLocation();
   const [job, setJob] = useState(null);
   const [isHit, setIsHit] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState(null);
 
   useEffect(() => {
     // Use Algolia hit data if available for instant load
     if (location.state?.hit) {
       setJob(location.state.hit);
       setIsHit(true);
-      return;
+    } else {
+      const query = new Parse.Query('Job');
+      query.get(id).then((result) => {
+        setJob(result);
+      });
     }
-    // Otherwise fetch from Parse
-    const query = new Parse.Query('Job');
-    query.get(id).then((result) => {
-      setJob(result);
-    });
   }, [id, location.state]);
+
+  // Check if this job is already favorited - need the Parse object
+  useEffect(() => {
+    const query = new Parse.Query('Job');
+    query.get(id).then((parseJob) => {
+      checkFavorite(parseJob).then((favorite) => {
+        if (favorite) {
+          setIsFavorited(true);
+          setFavoriteId(favorite.id);
+        }
+      });
+    });
+  }, [id]);
+
+  const handleFavorite = () => {
+    if (isFavorited) {
+      removeFavorite(favoriteId).then(() => {
+        setIsFavorited(false);
+        setFavoriteId(null);
+      });
+    } else {
+      const query = new Parse.Query('Job');
+      query.get(id).then((parseJob) => {
+        addFavorite(parseJob).then((favorite) => {
+          setIsFavorited(true);
+          setFavoriteId(favorite.id);
+        });
+      });
+    }
+  };
 
   if (!job) return (
     <div className="bg-gray-50 min-h-screen flex items-center justify-center">
@@ -48,7 +80,15 @@ export default function JobDetail() {
           &larr; Back to Jobs
         </button>
         <div className="bg-white rounded-xl shadow-md p-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">{get('title')}</h1>
+          <div className="flex justify-between items-start">
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">{get('title')}</h1>
+            <button
+              onClick={handleFavorite}
+              className={`text-3xl ${isFavorited ? 'text-yellow-400' : 'text-gray-300'}`}
+            >
+              &#9733;
+            </button>
+          </div>
           <p className="text-blue-600 text-xl font-medium mb-1">{get('company')}</p>
           <p className="text-gray-500 mb-6">{get('location')}</p>
           <div className="flex gap-3 mb-6">
