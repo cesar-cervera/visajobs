@@ -20,8 +20,8 @@ export default function Components() {
         {/* Protected routes */}
         <Route path="/" element={<ProtectedRoute component={Home} />} />
         <Route path="/jobs" element={<ProtectedRoute component={Jobs} />} />
-        <Route path="/jobs/:id" element={<JobDetail/>} />
-
+        <Route path="/jobs/:id" element={<ProtectedRoute component={JobDetail} />} />
+        
         {/* Catch all */}
         <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
